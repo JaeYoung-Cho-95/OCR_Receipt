@@ -10,6 +10,7 @@ from numpy.lib.type_check import imag
 from imgaug.augmentables.bbs import BoundingBox, BoundingBoxesOnImage
 import os
 from tqdm import tqdm
+from make_csv import make_csv
 
 class Augmentation:
     def __init__(self,img_path,json_path):
@@ -147,3 +148,8 @@ if __name__ == '__main__':
     print('data augmentation 성공')
     print('*' * 30)
     del temp
+    
+    images_path = '.././data/aug_img/'
+    json_path = '.././data/aug_json/'
+    
+    df = make_csv(images_path,json_path)
