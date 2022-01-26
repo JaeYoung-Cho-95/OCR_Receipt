@@ -86,8 +86,11 @@ class Augmentation:
 
     # 3. image augmentation
     def augmentation(self):
+        os.makedirs('../data/aug_img', exist_ok=True)
+        os.makedirs('../data/aug_json', exist_ok=True)
 
-        for cnt in tqdm(range(100000)):
+        cnt = 0
+        while True:
             for i in range(len(self.bounding_box)):
                 # 박스 좌표값 담아두기
                 bbs = BoundingBoxesOnImage([
@@ -117,14 +120,15 @@ class Augmentation:
                                                                     str(bbs_aug[j][1][0]),
                                                                     str(bbs_aug[j][1][1])]
                                                                     })
-                    
+                cv2.imwrite('.././data/aug_img/{}.jpg'.format(cnt), image_aug)
+                with open(".././data/aug_json/{}.json".format(cnt), "w") as f: 
+                    json.dump(json_data, f)
+                cnt += 1
 
-            os.makedirs('../data/aug_img', exist_ok=True)
-            os.makedirs('../data/aug_json', exist_ok=True)
-
-            cv2.imwrite('.././data/aug_img/{}.jpg'.format(cnt), image_aug)
-            with open(".././data/aug_json/{}.json".format(cnt), "w") as f: 
-                json.dump(json_data, f)
+            if cnt % 5000 == 0:
+                print('{} / {} 개 생성 완료'.format(cnt,100000))
+            if cnt >= 100000:
+                break
 
 
     
