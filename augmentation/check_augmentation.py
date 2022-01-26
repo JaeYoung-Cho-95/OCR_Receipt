@@ -6,7 +6,7 @@ import glob
 
 def check_image_json():
     for _ in range(5):
-        temp = random.randint(45000,45500)
+        temp = random.randint(0,100000)
         with open('.././data/aug_json/{}.json'.format(temp),encoding='utf-8') as json_file:
             json_data = json.load(json_file)
 
