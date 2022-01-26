@@ -2,8 +2,6 @@ import pandas as pd
 import json
 import glob
 from tqdm import tqdm
-images_path = '.././data/aug_img/'
-json_path = '.././data/aug_json/'
 
 def make_csv(images_path : str, json_path : str) -> pd.DataFrame:
     """
@@ -22,11 +20,19 @@ def make_csv(images_path : str, json_path : str) -> pd.DataFrame:
         또한 images, json 파일들의 존재하는 상위 경로에 csv 파일을 저장한다.
     """    
 
+    # images_path = '.././data/aug_img/'
+    # json_path = '.././data/aug_json/'
+
+    print('csv file 을 만드는 중 입니다.')
+
     images_list = glob.glob(images_path + '*.jpg')
     json_list = glob.glob(json_path + '*.json')
 
     images_list = [x.split('\\')[-1] for x in images_list]
     json_list = [x.split('\\')[-1] for x in json_list]
+
+    print(images_list)
+    print(json_list)
 
     images_list = sorted(images_list, key = lambda x : int(x.split('.')[0]))
     json_list = sorted(json_list, key = lambda x : int(x.split('.')[0]))
@@ -52,7 +58,3 @@ def make_csv(images_path : str, json_path : str) -> pd.DataFrame:
     df.to_csv('.././data/df.csv',sep=',',na_rep='NaN',encoding='utf-8')
 
     return df
-
-if __name__ == '__main__': 
-    print('csv file 을 만드는 중 입니다.')
-    df = make_csv(images_path,json_path)
