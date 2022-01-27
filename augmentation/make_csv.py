@@ -28,11 +28,12 @@ def make_csv(images_path : str, json_path : str) -> pd.DataFrame:
     images_list = glob.glob(images_path + '*.jpg')
     json_list = glob.glob(json_path + '*.json')
 
+
+    # mac = split 안에 '/'
+    # windows = split 안에 '\\' 넣기
     images_list = [x.split('\\')[-1] for x in images_list]
     json_list = [x.split('\\')[-1] for x in json_list]
 
-    print(images_list)
-    print(json_list)
 
     images_list = sorted(images_list, key = lambda x : int(x.split('.')[0]))
     json_list = sorted(json_list, key = lambda x : int(x.split('.')[0]))

@@ -29,6 +29,10 @@ class Augmentation:
         except:
             print('glob library 의 input 형식을 받아야합니다.')
             return None
+        
+
+        images_path = sorted(images_path, key = lambda x : int(x.split('/')[-1].split('.')[0]))
+        bounding_box_path = sorted(bounding_box_path, key = lambda x : int(x.split('/')[-1].split('.')[0]))
 
         images = []
         for img_path in images_path:
@@ -69,7 +73,7 @@ class Augmentation:
             )
             # augmentation resize 정리
             augmentation_resize = iaa.Sequential([
-                iaa.Resize({"height":1500,"width":1000},interpolation="cubic")
+                iaa.Resize({"height":224,"width":224},interpolation="cubic")
             ])
             image_aug, bbs_aug = augmentation_resize(image=self.images[i], bounding_boxes=bbs)
 
@@ -102,7 +106,7 @@ class Augmentation:
                     iaa.Affine(translate_percent={"x":(-0.5,0.5),"y":(-0.5,0.5)},rotate=(-2,2),scale=(0.5,2)),
                     iaa.Multiply((0.8, 1.3)),
                     iaa.LinearContrast((0.8,1.2)),
-                    iaa.GaussianBlur((0.0,3.0)),
+                    # iaa.GaussianBlur((0.0,1.0)),
                     # iaa.Sometimes(0.5,
                     #     iaa.GaussianBlur((0.0,3.0))
                     # )
